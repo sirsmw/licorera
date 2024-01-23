@@ -11,6 +11,6 @@ while ($reg  = mysqli_fetch_array($res))
     $vec[]=$reg;
 }
 $cad = json_encode($vec);
-echo $cad;
 header('Content-Type: application/json');
+echo $cad;
 ?>
