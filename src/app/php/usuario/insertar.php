@@ -7,7 +7,7 @@ $json = file_get_contents('php://input');
 $params = json_decode($json);
 $nombre = $params->nombre;
 $usuario = $params->usuario;
-$clave = $params->clave;
+$clave = sha1($params->clave);
 $tipo = $params->tipo;
 
 
@@ -15,7 +15,7 @@ $tipo = $params->tipo;
 require("../conexion.php");
 //$ins = "insert into usuarios (nombre,usuario,clave,tipo) values ('NombrePrueba','Pruebausuario',sha1('1234'),'Invitado')";
 //$ins = "insert into usuarios (nombre,usuario,clave,tipo) values ('$params ->nombre','$params ->usuario','sha1($params ->clave)','$params ->tipo')";
-$ins = "insert into usuarios (nombre,usuario,clave,tipo) values ('$nombre','$usuario','sha1($clave)','$tipo')";
+$ins = "insert into usuarios (nombre,usuario,clave,tipo) values ('$nombre','$usuario','$clave','$tipo')";
 
 mysqli_query($conexion,$ins) or die("NO insertó usuarios");
 class Result {}

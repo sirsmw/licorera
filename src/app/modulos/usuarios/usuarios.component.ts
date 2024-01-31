@@ -11,16 +11,20 @@ export class UsuariosComponent implements OnInit {
   //Variables globales
   verf = false;
   usuario: any;
+  iduser:any;
   user = {
     nombre : '',
     usuario :'',
     clave: '',
-    tipo: ''
+    tipo: '',
+
   };
   validnombre= true;
   validusuario=true;
   validclave=true;
   validtipo=true;
+  // Validar si edito o agrego un registro
+  beditar=false;
 
   constructor (private suser: UsuarioService) {}
   
@@ -34,6 +38,9 @@ export class UsuariosComponent implements OnInit {
     switch(dato) {
        case 0:
         this.verf=false;
+        this.beditar=false;
+        this.iduser="";
+        this.limpiar();
        break;
        case 1:
         this.verf=true;
@@ -113,7 +120,6 @@ export class UsuariosComponent implements OnInit {
       }
     });
   }
-
   borrarusuario(id: any){
     this.suser.eliminar(id).subscribe((datos:any) => {
       if (datos['resultado']=='OK'){
@@ -122,5 +128,34 @@ export class UsuariosComponent implements OnInit {
      });
      this.consulta();
   }
+  cargarusuario(datos:any,id:any){
+    console.log("CargarDatos Id",id);
+    console.log("CargarDatos datos",datos);
+    
+    this.user.nombre=datos.nombre;
+    this.user.usuario=datos.usuario;
+    this.user.clave=datos.clave;
+    this.user.tipo=datos.tipo;
+    this.iduser=id;
+    this.mostrar(1);
+    this.beditar=true;
+  }
 
+  editar(){
+      console.log("Editar User",this.user);
+      console.log("Editar Iduser",this.iduser);
+
+      this.validar();
+      if (this.validnombre==true && this.validusuario==true && this.validtipo==true && this.validclave==true)
+      {
+
+        this.suser.edit(this.user,this.iduser).subscribe((datos:any) => {
+          //console.log("resultado",datos['resultado']);
+        if (datos['resultado']=='Ok'){
+          this.consulta();
+        }
+       });
+        this.mostrar(0);
+      }
+  }
 }

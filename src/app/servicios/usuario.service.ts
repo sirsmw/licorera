@@ -12,18 +12,18 @@ export class UsuarioService {
   }
   consultar() {
     return this.http.get(this.url+'consulta.php');
-    console.log(this.url);
+    //console.log(this.url);
   }
   insertar(datos:any) {
-    console.log(JSON.stringify(datos));
+    //console.log(JSON.stringify(datos));
     return this.http.post(this.url+'insertar.php', JSON.stringify(datos));
   }
   eliminar(id:number) {
     return this.http.get(this.url+'eliminar.php?id='+id);
   }
 
-  edit(datos:any) {
-    return this.http.post('${this.url}editar.php', JSON.stringify(datos));
+  edit(datos:any,id:any) {
+    return this.http.post(this.url+'editar.php?id='+id, JSON.stringify(datos));
   }
 
   

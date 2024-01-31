@@ -4,7 +4,10 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Origin, X-Requested-Width, Content-Type,Accept');
 
 require("../conexion.php");
-$del = "delete from usuarios where id_usuario=".$_GET['id'];
+$id = $_GET['id'];
+
+
+$del = "delete from usuarios where id_usuario='$id'";
 
 mysqli_query($conexion,$del) or die("NO eliminó usuarios");
 
